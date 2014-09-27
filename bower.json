@@ -1,8 +1,8 @@
 {
   "name": "release-heat",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "authors": [
-    "Gavin King <gavin.king@fronter.com>"
+    "Plumpertron <plumpnation@gmail.com>"
   ],
   "license": "MIT",
   "ignore": [
