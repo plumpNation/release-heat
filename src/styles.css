@@ -18,7 +18,9 @@ body {
 .developer-details {
     font-family: Arial;
     font-size: 1em;
-    padding: 5px;
+    padding: 15px;
+    display: inline-block;
+    background-image: url("images/torn-paper.png");
 }
 
 .developer-details dt {
@@ -40,7 +42,8 @@ body {
 }
 
 .keyboard,
-.monitor {
+.monitor,
+.developer-details {
     background-repeat: no-repeat;
     overflow: hidden;
     background-size: 100% 100%;
