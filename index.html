@@ -3,14 +3,15 @@
     <head>
         <title>Release heatmap</title>
         <link rel="stylesheet" href="styles.css" media="screen" charset="utf-8">
+        <script src="bower_components/webgl-heatmap/webgl-heatmap.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="app.js"></script>
     </head>
-    <body>
-        <heatmap></heatmap>
+    <body ng-controller="office">
         <desk></desk>
         <desk></desk>
         <desk></desk>
         <desk></desk>
+        <heatmap points="points"></heatmap>
     </body>
 </html>
