@@ -32,7 +32,7 @@ angular.module('releaseHeat', [])
             scope: {
                 points: '='
             },
-            controller: function ($scope, $element, Store) {
+            controller: function ($scope, $element, $timeout, Store) {
                 var heatmap,
                     canvas = $element[0],
                     /**
@@ -40,17 +40,23 @@ angular.module('releaseHeat', [])
                      */
                     addPoints = function (points) {
                         if (points) {
-                            heatmap.addPoints(points);
-                            heatmap.update();
-                            heatmap.display();
+                            $timeout(function () {
+                                heatmap.addPoints(points);
+                                heatmap.update();
+                                heatmap.display();
+                            });
                         }
                     },
 
                     resizeCanvas = function () {
                         $scope.windowWidth = window.innerWidth;
                         $scope.windowHeight = window.innerHeight;
-                        heatmap.update();
-                        heatmap.display();
+
+                        $timeout(function () {
+                            heatmap.adjustSize();
+                            heatmap.update();
+                            heatmap.display();
+                        });
                     };
 
                 // resize the canvas to fill browser window dynamically
@@ -64,8 +70,8 @@ angular.module('releaseHeat', [])
                     return;
                 }
 
-                addPoints(Store.get('heatpoints') || $scope.points);
                 resizeCanvas();
+                addPoints(Store.get('heatpoints') || $scope.points);
             }
         };
     })
