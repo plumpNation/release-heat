@@ -1,20 +1,84 @@
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
     width: 100%;
-    height: 100%
+    height: 100%;
+    font-size: 1rem;
+    margin: 0;
+    background-size: 215px;
+}
+
+body {
+    background-image: url("images/carpet-texture.jpg");
+}
+
+.developer-details {
+    font-family: Arial;
+    font-size: 1em;
+    padding: 5px;
+}
+
+.developer-details dt {
+    opacity: 0.5;
 }
 
 .desk {
+    position: absolute;
+    top: 50px;
+    left: 50px;
     width: 400px;
-    height: 300px;
-    border: thick solid rgba(0, 0, 0, 0.5);
+    height: 200px;
+    border: thin solid rgba(0, 0, 0, 0.1);
     display: inline-block;
     margin: 10px;
-    position: relative;
+    background-image: url("images/desk-texture.jpg");
+    box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.3);
+    transform: rotate(-10deg);
+}
+
+.keyboard,
+.monitor {
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-size: 100% 100%;
+}
+
+.monitor {
+    top: 75px;
+    width: 175px;
+    height: 40px;
+    background-image: url("images/monitor-top.png");
+}
+
+.monitor-1 {
+    left: 30px;
+    transform: rotate(-10deg);
+}
+
+.monitor-2 {
+    left: 205px;
+    transform: rotate(10deg);
+}
+
+.keyboard {
+    top: 100px;
+    left: 120px;
+    width: 150px;
+    height: 100px;
+    transform: rotate(2deg);
+    background-image: url("images/keyboard-top.png");
+}
+
+.keyboard,
+.heatmap,
+.monitor {
+    position: absolute;
 }
 
 .heatmap {
-    position: absolute;
     top: 0;
     left: 0;
 }
