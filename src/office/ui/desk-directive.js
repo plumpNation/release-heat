@@ -6,50 +6,59 @@ angular.module('office.ui', [])
             replace: true,
 
             scope: {
-                point: '='
+                developer: '='
             },
 
             controller: function ($scope, $element, $timeout, DeskHelper) {
                 var heatmap,
                     canvas = angular.element($element[0].querySelector('.heatmap')),
 
+                    heatData = {
+                        x: 200,
+                        y: 200,
+                        intensity: 0.5
+                    },
+
+                    adjustData = function (dev) {
+                        // This is where the business logic needs to happen
+                        heatData.size = 100 || dev.releases[0];
+                    },
+
                     /**
-                     * @param {null|object} point The data for this desk.
+                     * @param {null|object} dev The data for this desk.
                      */
-                    init = function (point) {
-                        if (point) {
+                    init = function () {
+                        var dev = $scope.developer;
+
+                        if (dev) {
+                            adjustData(dev);
+
+                            console.log(heatData);
+
                             $timeout(function () {
                                 DeskHelper.getPos($element);
-                                heatmap.addPoints([point]);
+
+                                heatmap.addPoints([heatData]);
                                 heatmap.update();
                                 heatmap.display();
                             });
                         }
-                    },
-
-                    resizeCanvas = function () {
-                        $scope.windowWidth = window.innerWidth;
-                        $scope.windowHeight = window.innerHeight;
-
-                        $timeout(function () {
-                            heatmap.adjustSize();
-                            heatmap.update();
-                            heatmap.display();
-                        });
                     };
 
                 canvas[0].style.height = $element[0].clientHeight + 'px';
                 canvas[0].style.width = $element[0].clientWidth + 'px';
 
                 try {
-                    heatmap = createWebGLHeatmap({'canvas': canvas[0]});
+                    heatmap = createWebGLHeatmap({
+                        'canvas': canvas[0]
+                    });
 
                 } catch (error) {
                     console.error(error);
                     return;
                 }
 
-                init($scope.point);
+                init();
             }
         };
     })

@@ -9,19 +9,14 @@ angular.module('releaseHeat', ['office.ui'])
             };
         };
     })
-    .value('OfficeConfig', {
-        'desks': [
-            {
-                'developer': {
-                    'name': 'Ben'
-                },
-
-                'releases': [1, 2, 1, 0, 0]
-            }
-        ]
-    })
+    .value('OfficeConfig', [
+        {
+            'name': 'Ben',
+            'releases': [1, 2, 1, 0, 0]
+        }
+    ])
     .controller('office', function ($scope, OfficeConfig, OfficeConfig) {
-        $scope.desks = OfficeConfig;
+        $scope.devs = OfficeConfig;
     })
     .service('DeskReleaseData', function () {
         this.get = function () {
