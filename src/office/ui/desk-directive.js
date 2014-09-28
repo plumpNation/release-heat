@@ -1,3 +1,4 @@
+/*global createWebGLHeatmap */
 angular.module('office.ui', [])
     .service('RandomNum', function () {
         this.clamp = function (min, max) {
@@ -6,7 +7,30 @@ angular.module('office.ui', [])
             return Math.floor((Math.random() * max) + min);
         };
     })
-    .directive('desk', function () {
+    .directive('desk', function (RandomNum) {
+        var createSize = function (n) {
+                return n * 100;
+            },
+
+            /**
+             * @return {array} The array of releases.
+             */
+            createData = function ($element, dev) {
+                // This is where the business logic needs to happen
+                var rdata = [];
+
+                dev.releases.forEach(function (release) {
+                    rdata.push({
+                        x: RandomNum.clamp(75, $element[0].clientWidth - 75),
+                        y: RandomNum.clamp(100, $element[0].clientHeight - 100),
+                        size: createSize(release),
+                        intensity: 0.2 // the higher this value, the easier it is to achieve red
+                    });
+                });
+
+                return rdata;
+            };
+
         return {
             restrict: 'E',
             templateUrl: 'office/ui/desk.html',
@@ -16,32 +40,9 @@ angular.module('office.ui', [])
                 developer: '='
             },
 
-            controller: function ($scope, $element, $timeout, DeskHelper, RandomNum) {
+            controller: function ($scope, $element, $timeout) {
                 var heatmap,
                     canvas = angular.element($element[0].querySelector('.heatmap')),
-
-                    createSize = function (n) {
-                        return n * 100;
-                    },
-
-                    /**
-                     * @return {array} The array of releases.
-                     */
-                    createData = function (dev) {
-                        // This is where the business logic needs to happen
-                        var rdata = [];
-
-                        dev.releases.forEach(function (release) {
-                            rdata.push({
-                                x: RandomNum.clamp(50, $element[0].clientWidth - 50),
-                                y: RandomNum.clamp(50, $element[0].clientHeight - 50),
-                                size: createSize(release),
-                                intensity: 0.5
-                            });
-                        });
-
-                        return rdata;
-                    },
 
                     /**
                      * @param {null|object} dev The data for this desk.
@@ -51,16 +52,11 @@ angular.module('office.ui', [])
                             heatData;
 
                         if (dev) {
-                            heatData = createData(dev);
-                            console.log(heatData);
+                            heatData = createData($element, dev);
+                            heatmap.addPoints(heatData);
+                            heatmap.update();
 
-                            $timeout(function () {
-                                DeskHelper.getPos($element);
-
-                                heatmap.addPoints(heatData);
-                                heatmap.update();
-                                heatmap.display();
-                            });
+                            $timeout(heatmap.display.bind(heatmap));
                         }
                     };
 
