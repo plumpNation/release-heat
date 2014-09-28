@@ -20,7 +20,10 @@ body {
     font-size: 1em;
     padding: 15px;
     display: inline-block;
+    position: absolute;
     background-image: url("images/torn-paper.png");
+    top: 118px;
+    left: -7px;
 }
 
 .developer-details dt {
@@ -50,7 +53,7 @@ body {
 }
 
 .monitor {
-    top: 75px;
+    top: 86px;
     width: 175px;
     height: 40px;
     background-image: url("images/monitor-top.png");

@@ -1,13 +1,6 @@
 /*global createWebGLHeatmap */
 angular.module('office.ui', [])
-    .service('RandomNum', function () {
-        this.clamp = function (min, max) {
-            var max = max - min + 1;
-
-            return Math.floor((Math.random() * max) + min);
-        };
-    })
-    .directive('desk', function (RandomNum) {
+    .directive('desk', function () {
         var createSize = function (n) {
                 return n * 100;
             },
@@ -17,13 +10,27 @@ angular.module('office.ui', [])
              */
             createData = function ($element, developer) {
                 // This is where the business logic needs to happen
-                var rdata = [];
+                var rdata = [],
+                    padding = 50,
+                    wUnits = ($element[0].clientWidth - padding) / 7;
 
-                rdata.push({
-                    x: RandomNum.clamp(75, $element[0].clientWidth - 175),
-                    y: RandomNum.clamp(100, $element[0].clientHeight - 100),
-                    size: createSize(developer.releases.length),
-                    intensity: 1 // the higher this value, the easier it is to achieve red
+
+                rdata = developer.releases.map(function (release) {
+                    return {
+                        x: wUnits * release.weekday + padding,
+                        y: $element[0].clientHeight * 0.5,
+
+                        size: (function () {
+                            var diff = release.linesRemoved - release.linesAdded;
+
+                            return diff;
+                        }()),
+
+                        // the higher this value, the easier it is to achieve red
+                        intensity: (function () {
+                            return Math.min(Math.max(release.linesAdded / 100, 0), 1)
+                        }())
+                    };
                 });
 
                 return rdata;
