@@ -21,7 +21,7 @@ angular.module('office.ui', [])
 
                 dev.releases.forEach(function (release) {
                     rdata.push({
-                        x: RandomNum.clamp(75, $element[0].clientWidth - 75),
+                        x: RandomNum.clamp(75, $element[0].clientWidth - 175),
                         y: RandomNum.clamp(100, $element[0].clientHeight - 100),
                         size: createSize(release),
                         intensity: 0.2 // the higher this value, the easier it is to achieve red
