@@ -15,17 +15,15 @@ angular.module('office.ui', [])
             /**
              * @return {array} The array of releases.
              */
-            createData = function ($element, dev) {
+            createData = function ($element, developer) {
                 // This is where the business logic needs to happen
                 var rdata = [];
 
-                dev.releases.forEach(function (release) {
-                    rdata.push({
-                        x: RandomNum.clamp(75, $element[0].clientWidth - 175),
-                        y: RandomNum.clamp(100, $element[0].clientHeight - 100),
-                        size: createSize(release),
-                        intensity: 0.2 // the higher this value, the easier it is to achieve red
-                    });
+                rdata.push({
+                    x: RandomNum.clamp(75, $element[0].clientWidth - 175),
+                    y: RandomNum.clamp(100, $element[0].clientHeight - 100),
+                    size: createSize(developer.releases.length),
+                    intensity: 1 // the higher this value, the easier it is to achieve red
                 });
 
                 return rdata;
